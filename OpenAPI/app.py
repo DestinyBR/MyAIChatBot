@@ -238,13 +238,13 @@ hr {
 </style>
 """, unsafe_allow_html=True)
 
-if "messages" not in st.session_state:
-    st.session_state.messages = [
-        {
-            "role": "assistant",
-            "content": "Heyy, I'm Glow Up Bot 🪞✨ Your bot bestie for skincare, hairstyles, makeup, and style help. I’m so glad you’re here and sooo down to be part of your glow up. I got you. Let’s find your style and make you feel 🔥"
-        }
-    ]
+# if "messages" not in st.session_state:
+#     st.session_state.messages = [
+#         {
+#             "role": "assistant",
+#             "content": "Heyy, I'm Glow Up Bot 🪞✨ Your bot bestie for skincare, hairstyles, makeup, and style help. I’m so glad you’re here and sooo down to be part of your glow up. I got you. Let’s find your style and make you feel 🔥"
+#         }
+#     ]
 
 if "prefill" not in st.session_state:
     st.session_state.prefill = ""
