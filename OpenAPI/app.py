@@ -167,6 +167,45 @@ p, li, div, label {
 hr {
     border-color: rgba(255,255,255,0.08);
 }
+ /* CHAT INPUT CONTAINER */
+[data-testid="stChatInput"] {
+    background: linear-gradient(135deg, rgba(178,109,255,0.15), rgba(240,107,179,0.12));
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 20px;
+    padding: 0.4rem;
+    backdrop-filter: blur(10px);
+}
+
+/* INPUT FIELD */
+[data-testid="stChatInput"] textarea,
+[data-testid="stChatInput"] input {
+    background: transparent !important;
+    color: #F8F7FB !important;
+    border: none !important;
+    font-size: 1rem;
+}
+
+/* REMOVE UGLY RED BORDER */
+[data-testid="stChatInput"] textarea:focus,
+[data-testid="stChatInput"] input:focus {
+    outline: none !important;
+    box-shadow: 0 0 0 2px rgba(178,109,255,0.6) !important;
+}
+
+/* SEND BUTTON */
+[data-testid="stChatInput"] button {
+    background: linear-gradient(135deg, #B26DFF, #F06BB3);
+    border-radius: 12px;
+    border: none;
+    color: white;
+    transition: 0.2s ease;
+}
+
+/* BUTTON HOVER */
+[data-testid="stChatInput"] button:hover {
+    filter: brightness(1.1);
+    transform: scale(1.03);
+}           
 </style>
 """, unsafe_allow_html=True)
 
