@@ -62,141 +62,181 @@ Important boundaries:
 
 st.markdown("""
 <style>
-/* Overall page */
 .stApp {
-    background: linear-gradient(180deg, #120f1f 0%, #1b1530 45%, #24173a 100%);
+    background: linear-gradient(180deg, #120f1f 0%, #1a1430 45%, #24173b 100%);
     color: #F8F7FB;
 }
 
-/* Main container */
 .block-container {
-    padding-top: 2rem;
+    max-width: 900px;
+    padding-top: 1.8rem;
     padding-bottom: 2rem;
-    max-width: 850px;
 }
 
-/* Title */
-h1 {
-    color: #FFF4FA !important;
-    font-weight: 800 !important;
-    letter-spacing: 0.3px;
+h1, h2, h3 {
+    color: #FFF7FB !important;
 }
 
-/* Subtitle text */
+.glow-hero {
+    background: linear-gradient(135deg, rgba(178,109,255,0.16), rgba(240,107,179,0.14));
+    border: 1px solid rgba(255,255,255,0.10);
+    border-radius: 24px;
+    padding: 1.4rem 1.2rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.18);
+}
+
+.glow-title {
+    font-size: 3rem;
+    font-weight: 800;
+    margin-bottom: 0.35rem;
+    color: #FFF4FA;
+    letter-spacing: 0.2px;
+}
+
 .glow-subtitle {
-    color: #E9DDF3;
-    font-size: 1.02rem;
-    margin-bottom: 1.2rem;
+    font-size: 1.06rem;
+    color: #EFE6F7;
+    line-height: 1.6;
 }
 
-/* Chat bubbles */
-[data-testid="stChatMessage"] {
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 18px;
-    padding: 0.35rem 0.4rem;
-    margin-bottom: 0.8rem;
-}
-
-/* User bubble feel */
-[data-testid="stChatMessage"]:has([data-testid="chatAvatarIcon-user"]) {
-    background: linear-gradient(180deg, rgba(161, 98, 255, 0.10), rgba(255, 105, 180, 0.08));
-    border: 1px solid rgba(220, 180, 255, 0.16);
-}
-
-/* Assistant bubble feel */
-[data-testid="stChatMessage"]:has([data-testid="chatAvatarIcon-assistant"]) {
-    background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
-    border: 1px solid rgba(255,255,255,0.09);
-}
-
-/* Input box */
-[data-testid="stChatInput"] {
-    background: rgba(255,255,255,0.04);
-    border-radius: 18px;
-}
-
-/* Text input area */
-[data-testid="stChatInput"] textarea,
-[data-testid="stChatInput"] input {
-    color: #F8F7FB !important;
-}
-
-/* Buttons */
-.stButton > button {
-    background: linear-gradient(90deg, #B26DFF, #F06BB3);
-    color: white;
-    border: none;
-    border-radius: 14px;
-    font-weight: 700;
-}
-
-/* Helpful cards */
 .glow-card {
     background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.03));
     border: 1px solid rgba(255,255,255,0.09);
-    border-radius: 18px;
-    padding: 1rem 1.1rem;
+    border-radius: 20px;
+    padding: 1rem;
     margin-bottom: 1rem;
 }
 
 .glow-tag {
     display: inline-block;
-    background: rgba(240, 107, 179, 0.16);
-    border: 1px solid rgba(240, 107, 179, 0.28);
-    color: #FFE8F4;
-    padding: 0.35rem 0.7rem;
+    background: rgba(240, 107, 179, 0.14);
+    border: 1px solid rgba(240, 107, 179, 0.25);
+    color: #FFEAF4;
+    padding: 0.35rem 0.75rem;
     border-radius: 999px;
-    margin-right: 0.4rem;
-    margin-bottom: 0.4rem;
+    margin-right: 0.45rem;
+    margin-bottom: 0.45rem;
     font-size: 0.88rem;
-    font-weight: 600;
+    font-weight: 700;
 }
 
-/* Better readability */
-p, li, label, div {
-    color: #F4F1F8;
+.glow-tip {
+    color: #E8DDF4;
+    font-size: 0.96rem;
+    margin-top: 0.25rem;
 }
 
-/* Code blocks if any */
-code {
-    color: #FFD6EA !important;
+[data-testid="stChatMessage"] {
+    background: rgba(255,255,255,0.035);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 18px;
+    padding: 0.4rem 0.45rem;
+    margin-bottom: 0.9rem;
+}
+
+[data-testid="stChatInput"] {
+    background: rgba(255,255,255,0.04);
+    border-radius: 18px;
+}
+
+[data-testid="stChatInput"] textarea,
+[data-testid="stChatInput"] input {
+    color: #F8F7FB !important;
+}
+
+.stButton > button {
+    width: 100%;
+    border-radius: 16px;
+    border: 1px solid rgba(255,255,255,0.08);
+    background: linear-gradient(90deg, rgba(178,109,255,0.95), rgba(240,107,179,0.92));
+    color: white;
+    font-weight: 800;
+    padding: 0.6rem 0.8rem;
+}
+
+.stButton > button:hover {
+    border: 1px solid rgba(255,255,255,0.14);
+    filter: brightness(1.03);
+}
+
+p, li, div, label {
+    color: #F5F2F8;
+}
+
+hr {
+    border-color: rgba(255,255,255,0.08);
 }
 </style>
-""", unsafe_allow_html=True)
-
-st.title("Glow Up Bot")
-st.markdown(
-    '<div class="glow-subtitle">Your beauty bestie for skincare, hairstyles, fashion, and confidence-boosting glow-ups. Warm, stylish, and made to feel welcoming for everybody.</div>',
-    unsafe_allow_html=True
-)
-
-st.markdown("""
-<div class="glow-card">
-    <span class="glow-tag">Skincare</span>
-    <span class="glow-tag">Makeup</span>
-    <span class="glow-tag">Hairstyles</span>
-    <span class="glow-tag">Beauty Looks</span>
-    <span class="glow-tag">Style Help</span>
-</div>
 """, unsafe_allow_html=True)
 
 if "messages" not in st.session_state:
     st.session_state.messages = [
         {
             "role": "assistant",
-            "content": "Yesss, welcome to Glow Up Bot 🪞✨ Ask me about skincare, hairstyles, beauty looks, or culturally relevant fashion and I’ll help you glow all the way up."
+            "content": "Yesss, welcome to Glow Up Bot 🪞✨ I’m your beauty bestie for skincare, hairstyles, makeup, and style help. Ask me anything glow-up related and let’s GOoo."
         }
     ]
+
+if "prefill" not in st.session_state:
+    st.session_state.prefill = ""
+
+st.markdown("""
+<div class="glow-hero">
+    <div class="glow-title">Glow Up Bot 🪞</div>
+    <div class="glow-subtitle">
+        Warm, stylish, and inclusive beauty guidance for skincare, makeup, hairstyles, and culturally relevant fashion.
+        Made to feel welcoming, expressive, and easy to use for everybody.
+    </div>
+</div>
+""", unsafe_allow_html=True)
+
+st.markdown("""
+<div class="glow-card">
+    <span class="glow-tag">Skincare</span>
+    <span class="glow-tag">Makeup</span>
+    <span class="glow-tag">Hairstyles</span>
+    <span class="glow-tag">Fashion</span>
+    <span class="glow-tag">Beauty Routines</span>
+    <div class="glow-tip">Pick a starter button below or type your own beauty question.</div>
+</div>
+""", unsafe_allow_html=True)
+
+col1, col2 = st.columns(2)
+col3, col4 = st.columns(2)
+
+with col1:
+    if st.button("✨ Skincare Help"):
+        st.session_state.prefill = "My skin has been acting up lately. Can you help me build a skincare routine?"
+
+with col2:
+    if st.button("💄 Makeup Look"):
+        st.session_state.prefill = "Help me choose a makeup look for an event."
+
+with col3:
+    if st.button("🪮 Hairstyle Ideas"):
+        st.session_state.prefill = "What hairstyle would look best for me based on my vibe and hair texture?"
+
+with col4:
+    if st.button("👗 Style Me"):
+        st.session_state.prefill = "Help me put together a stylish look that fits my personality and occasion."
+
+st.markdown("---")
 
 for message in st.session_state.messages:
     avatar = "🪞" if message["role"] == "assistant" else "✨"
     with st.chat_message(message["role"], avatar=avatar):
         st.write(message["content"])
 
-user_input = st.chat_input("What's up? Ask me about skincare, beauty, fashion, or hairstyles...")
+prompt = st.chat_input(
+    "What's up? Ask me about skincare, beauty, fashion, or hairstyles..."
+)
+
+user_input = prompt or st.session_state.prefill
 
 if user_input:
+    st.session_state.prefill = ""
+
     st.session_state.messages.append({"role": "user", "content": user_input})
 
     with st.chat_message("user", avatar="✨"):
