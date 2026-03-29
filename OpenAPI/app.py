@@ -61,15 +61,19 @@ Important boundaries:
 """
 
 st.markdown("""
+st.markdown("""
 <style>
 .stApp {
-    background: linear-gradient(180deg, #120f1f 0%, #1a1430 45%, #24173b 100%);
+    background:
+        radial-gradient(circle at top left, rgba(178,109,255,0.18), transparent 28%),
+        radial-gradient(circle at top right, rgba(240,107,179,0.14), transparent 24%),
+        linear-gradient(180deg, #120f1f 0%, #1a1430 45%, #24173b 100%);
     color: #F8F7FB;
 }
 
 .block-container {
-    max-width: 900px;
-    padding-top: 1.8rem;
+    max-width: 920px;
+    padding-top: 1.6rem;
     padding-bottom: 2rem;
 }
 
@@ -83,7 +87,7 @@ h1, h2, h3 {
     border-radius: 24px;
     padding: 1.4rem 1.2rem;
     margin-bottom: 1rem;
-    box-shadow: 0 0 0 2px rgba(240,107,179,0.5);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.18);
 }
 
 .glow-title {
@@ -106,6 +110,7 @@ h1, h2, h3 {
     border-radius: 20px;
     padding: 1rem;
     margin-bottom: 1rem;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.10);
 }
 
 .glow-tag {
@@ -127,24 +132,75 @@ h1, h2, h3 {
     margin-top: 0.25rem;
 }
 
+.glow-section-label {
+    font-size: 0.92rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: #D8C7EA;
+    margin: 1rem 0 0.5rem 0;
+    font-weight: 700;
+}
+
+/* Chat cards */
 [data-testid="stChatMessage"] {
-    background: rgba(255,255,255,0.035);
-    border: 1px solid rgba(255,255,255,0.08);
-    border-radius: 18px;
-    padding: 0.4rem 0.45rem;
-    margin-bottom: 0.9rem;
-}
-
-[data-testid="stChatInput"] {
     background: rgba(255,255,255,0.04);
-    border-radius: 18px;
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 20px;
+    padding: 0.55rem 0.6rem;
+    margin-bottom: 0.9rem;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.10);
 }
 
+/* Input wrapper */
+[data-testid="stChatInput"] {
+    background: linear-gradient(135deg, rgba(178,109,255,0.18), rgba(240,107,179,0.12));
+    border: 1px solid rgba(255,255,255,0.13);
+    border-radius: 20px;
+    padding: 0.45rem;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 0 0 rgba(0,0,0,0);
+    transition: box-shadow 0.2s ease, border 0.2s ease, transform 0.2s ease;
+}
+
+/* Focus glow */
+[data-testid="stChatInput"]:focus-within {
+    border: 1px solid rgba(186, 132, 255, 0.75);
+    box-shadow: 0 0 0 3px rgba(186, 132, 255, 0.18), 0 10px 25px rgba(0,0,0,0.16);
+    transform: translateY(-1px);
+}
+
+/* Actual text area */
 [data-testid="stChatInput"] textarea,
 [data-testid="stChatInput"] input {
+    background: transparent !important;
     color: #F8F7FB !important;
+    border: none !important;
+    font-size: 1rem;
 }
 
+/* Placeholder */
+[data-testid="stChatInput"] textarea::placeholder,
+[data-testid="stChatInput"] input::placeholder {
+    color: #D9CBE7 !important;
+    opacity: 1 !important;
+}
+
+/* Send button */
+[data-testid="stChatInput"] button {
+    background: linear-gradient(135deg, #A66BFF, #F06BB3) !important;
+    border-radius: 14px !important;
+    border: none !important;
+    color: white !important;
+    transition: 0.2s ease;
+    box-shadow: 0 6px 16px rgba(178,109,255,0.28);
+}
+
+[data-testid="stChatInput"] button:hover {
+    filter: brightness(1.08);
+    transform: scale(1.03);
+}
+
+/* General buttons */
 .stButton > button {
     width: 100%;
     border-radius: 16px;
@@ -152,12 +208,22 @@ h1, h2, h3 {
     background: linear-gradient(90deg, rgba(178,109,255,0.95), rgba(240,107,179,0.92));
     color: white;
     font-weight: 800;
-    padding: 0.6rem 0.8rem;
+    padding: 0.62rem 0.8rem;
 }
 
 .stButton > button:hover {
     border: 1px solid rgba(255,255,255,0.14);
     filter: brightness(1.03);
+}
+
+/* Sidebar */
+[data-testid="stSidebar"] {
+    background: linear-gradient(180deg, #161127 0%, #1f1633 100%);
+    border-right: 1px solid rgba(255,255,255,0.06);
+}
+
+[data-testid="stSidebar"] * {
+    color: #F4EEF9 !important;
 }
 
 p, li, div, label {
@@ -167,45 +233,6 @@ p, li, div, label {
 hr {
     border-color: rgba(255,255,255,0.08);
 }
- /* CHAT INPUT CONTAINER */
-[data-testid="stChatInput"] {
-    background: linear-gradient(135deg, rgba(178,109,255,0.15), rgba(240,107,179,0.12));
-    border: 1px solid rgba(255,255,255,0.12);
-    border-radius: 20px;
-    padding: 0.4rem;
-    backdrop-filter: blur(10px);
-}
-
-/* INPUT FIELD */
-[data-testid="stChatInput"] textarea,
-[data-testid="stChatInput"] input {
-    background: transparent !important;
-    color: #F8F7FB !important;
-    border: none !important;
-    font-size: 1rem;
-}
-
-/* REMOVE UGLY RED BORDER */
-[data-testid="stChatInput"] textarea:focus,
-[data-testid="stChatInput"] input:focus {
-    outline: none !important;
-    box-shadow: 0 0 0 2px rgba(178,109,255,0.6) !important;
-}
-
-/* SEND BUTTON */
-[data-testid="stChatInput"] button {
-    background: linear-gradient(135deg, #B26DFF, #F06BB3);
-    border-radius: 12px;
-    border: none;
-    color: white;
-    transition: 0.2s ease;
-}
-
-/* BUTTON HOVER */
-[data-testid="stChatInput"] button:hover {
-    filter: brightness(1.1);
-    transform: scale(1.03);
-}           
 </style>
 """, unsafe_allow_html=True)
 
