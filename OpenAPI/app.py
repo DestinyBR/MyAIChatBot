@@ -256,7 +256,6 @@ st.markdown("""
         Heyy, I'm Glow Up Bot 🪞✨ Your bestie for skincare, hairstyles, makeup, and style help! 
             I’m so glad you’re here and soo down to be part of your glow up journey. I got you. Let’s find your style and make you feel 🔥!
 
-    </div>
 </div>
 """, unsafe_allow_html=True)
 
