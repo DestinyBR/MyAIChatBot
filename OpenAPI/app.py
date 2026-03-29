@@ -170,7 +170,11 @@ h1, h2, h3 {
         0 0 40px rgba(240, 107, 179, 0.15);
     transform: translateY(-1px);
 }
-
+textarea:focus,
+input:focus {
+    outline: none !important;
+    box-shadow: none !important;
+}
 /* Actual text area */
 [data-testid="stChatInput"] textarea,
 [data-testid="stChatInput"] input {
