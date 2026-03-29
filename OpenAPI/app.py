@@ -60,7 +60,7 @@ Important boundaries:
 - Keep advice practical, stylish, and beginner-friendly.
 """
 
-st.markdown("""
+
 st.markdown("""
 <style>
 .stApp {
