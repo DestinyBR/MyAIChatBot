@@ -83,7 +83,7 @@ h1, h2, h3 {
     border-radius: 24px;
     padding: 1.4rem 1.2rem;
     margin-bottom: 1rem;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.18);
+    box-shadow: 0 0 0 2px rgba(240,107,179,0.5);
 }
 
 .glow-title {
