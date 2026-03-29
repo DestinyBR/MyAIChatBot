@@ -1,13 +1,7 @@
 import streamlit as st
-from dotenv import load_dotenv
 from openai import OpenAI
 
-load_dotenv()
-
-client = OpenAI()
-
-st.set_page_config(page_title="My AI Chatbot")
-st.title("My AI Chatbot")
+client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
 
 if "messages" not in st.session_state:
     st.session_state.messages = []
