@@ -164,8 +164,10 @@ h1, h2, h3 {
 
 /* Focus glow */
 [data-testid="stChatInput"]:focus-within {
-    border: 1px solid rgba(186, 132, 255, 0.75);
-    box-shadow: 0 0 0 3px rgba(186, 132, 255, 0.18), 0 10px 25px rgba(0,0,0,0.16);
+    border: 1px solid rgba(200, 140, 255, 0.4);
+    box-shadow: 
+        0 0 20px rgba(200, 140, 255, 0.25),
+        0 0 40px rgba(240, 107, 179, 0.15);
     transform: translateY(-1px);
 }
 
