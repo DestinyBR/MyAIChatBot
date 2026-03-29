@@ -1,14 +1,17 @@
-import streamlit as st
+import os
+from dotenv import load_dotenv
 from openai import OpenAI
+import streamlit as st
 
-st.set_page_config(
-    page_title="Glow Up Bot",
-    page_icon="🪞",
-    layout="centered"
-)
+load_dotenv()
 
-client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
+api_key = os.getenv("OPENAI_API_KEY")
 
+if not api_key:
+    st.error("OPENAI_API_KEY not found. Check your .env file.")
+    st.stop()
+
+client = OpenAI(api_key=api_key)
 SYSTEM_PROMPT = """
 You are Glow Up Bot, an inclusive beauty and style assistant.
 
@@ -63,6 +66,8 @@ Important boundaries:
 
 st.markdown("""
 <style>
+
+/* ===== APP BACKGROUND ===== */
 .stApp {
     background:
         radial-gradient(circle at top left, rgba(178,109,255,0.18), transparent 28%),
@@ -71,16 +76,23 @@ st.markdown("""
     color: #F8F7FB;
 }
 
+/* ===== LAYOUT ===== */
 .block-container {
     max-width: 920px;
     padding-top: 1.6rem;
     padding-bottom: 2rem;
 }
 
+/* ===== TEXT ===== */
 h1, h2, h3 {
     color: #FFF7FB !important;
 }
 
+p, li, div, label {
+    color: #F5F2F8;
+}
+
+/* ===== HERO ===== */
 .glow-hero {
     background: linear-gradient(135deg, rgba(178,109,255,0.16), rgba(240,107,179,0.14));
     border: 1px solid rgba(255,255,255,0.10);
@@ -95,15 +107,14 @@ h1, h2, h3 {
     font-weight: 800;
     margin-bottom: 0.35rem;
     color: #FFF4FA;
-    letter-spacing: 0.2px;
 }
 
 .glow-subtitle {
     font-size: 1.06rem;
     color: #EFE6F7;
-    line-height: 1.6;
 }
 
+/* ===== CARDS ===== */
 .glow-card {
     background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.03));
     border: 1px solid rgba(255,255,255,0.09);
@@ -113,6 +124,7 @@ h1, h2, h3 {
     box-shadow: 0 8px 24px rgba(0,0,0,0.10);
 }
 
+/* ===== TAGS ===== */
 .glow-tag {
     display: inline-block;
     background: rgba(240, 107, 179, 0.14);
@@ -120,85 +132,66 @@ h1, h2, h3 {
     color: #FFEAF4;
     padding: 0.35rem 0.75rem;
     border-radius: 999px;
-    margin-right: 0.45rem;
-    margin-bottom: 0.45rem;
     font-size: 0.88rem;
     font-weight: 700;
 }
 
-.glow-tip {
-    color: #E8DDF4;
-    font-size: 0.96rem;
-    margin-top: 0.25rem;
-}
-
-.glow-section-label {
-    font-size: 0.92rem;
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    color: #D8C7EA;
-    margin: 1rem 0 0.5rem 0;
-    font-weight: 700;
-}
-
-/* Chat cards */
+/* ===== CHAT MESSAGES ===== */
 [data-testid="stChatMessage"] {
     background: rgba(255,255,255,0.04);
     border: 1px solid rgba(255,255,255,0.08);
     border-radius: 20px;
-    padding: 0.55rem 0.6rem;
+    padding: 0.6rem;
     margin-bottom: 0.9rem;
     box-shadow: 0 6px 16px rgba(0,0,0,0.10);
 }
 
-/* Input wrapper */
+/* ===== CHAT INPUT (FIXED + POLISHED) ===== */
 [data-testid="stChatInput"] {
-    background: linear-gradient(135deg, rgba(178,109,255,0.18), rgba(240,107,179,0.12));
-    border: 1px solid rgba(255,255,255,0.13);
-    border-radius: 20px;
-    padding: 0.45rem;
+    background: linear-gradient(135deg, rgba(178,109,255,0.18), rgba(240,107,179,0.18));
+    border: 1px solid rgba(255,255,255,0.13) !important;
+    border-radius: 20px !important;
+    padding: 0.45rem !important;
     backdrop-filter: blur(10px);
-    box-shadow: 0 0 0 rgba(0,0,0,0);
-    transition: box-shadow 0.2s ease, border 0.2s ease, transform 0.2s ease;
+    box-shadow: none !important;
+    outline: none !important;
+    transition: all 0.2s ease;
 }
 
-/* Focus glow */
-[data-testid="stChatInput"]:focus-within {
-    border: 1px solid rgba(200, 140, 255, 0.4);
-    box-shadow: 
-        0 0 20px rgba(200, 140, 255, 0.25),
-        0 0 40px rgba(240, 107, 179, 0.15);
-    transform: translateY(-1px);
-}
-textarea:focus,
-input:focus {
+/* REMOVE ALL INTERNAL RED BORDERS */
+[data-testid="stChatInput"] > div,
+[data-testid="stChatInput"] div,
+[data-testid="stChatInput"] div[data-baseweb="textarea"],
+[data-testid="stChatInput"] textarea,
+[data-testid="stChatInput"] input,
+[data-testid="stChatInput"] button {
+    border: none !important;
     outline: none !important;
     box-shadow: none !important;
 }
-/* Actual text area */
+
+/* TEXT AREA */
 [data-testid="stChatInput"] textarea,
 [data-testid="stChatInput"] input {
     background: transparent !important;
     color: #F8F7FB !important;
-    border: none !important;
     font-size: 1rem;
 }
 
-/* Placeholder */
+/* PLACEHOLDER */
 [data-testid="stChatInput"] textarea::placeholder,
 [data-testid="stChatInput"] input::placeholder {
     color: #D9CBE7 !important;
     opacity: 1 !important;
 }
 
-/* Send button */
+/* SEND BUTTON */
 [data-testid="stChatInput"] button {
     background: linear-gradient(135deg, #A66BFF, #F06BB3) !important;
     border-radius: 14px !important;
-    border: none !important;
     color: white !important;
     transition: 0.2s ease;
-    box-shadow: 0 6px 16px rgba(178,109,255,0.28);
+    box-shadow: 0 6px 16px rgba(178,109,255,0.28) !important;
 }
 
 [data-testid="stChatInput"] button:hover {
@@ -206,7 +199,13 @@ input:focus {
     transform: scale(1.03);
 }
 
-/* General buttons */
+/* FOCUS GLOW */
+[data-testid="stChatInput"]:focus-within {
+    border: 1px solid rgba(255, 120, 220, 0.65) !important;
+    box-shadow: 0 0 14px rgba(255, 120, 220, 0.35) !important;
+}
+
+/* ===== BUTTONS ===== */
 .stButton > button {
     width: 100%;
     border-radius: 16px;
@@ -218,11 +217,10 @@ input:focus {
 }
 
 .stButton > button:hover {
-    border: 1px solid rgba(255,255,255,0.14);
     filter: brightness(1.03);
 }
 
-/* Sidebar */
+/* ===== SIDEBAR ===== */
 [data-testid="stSidebar"] {
     background: linear-gradient(180deg, #161127 0%, #1f1633 100%);
     border-right: 1px solid rgba(255,255,255,0.06);
@@ -232,13 +230,11 @@ input:focus {
     color: #F4EEF9 !important;
 }
 
-p, li, div, label {
-    color: #F5F2F8;
-}
-
+/* ===== DIVIDER ===== */
 hr {
     border-color: rgba(255,255,255,0.08);
 }
+
 </style>
 """, unsafe_allow_html=True)
 
@@ -246,7 +242,7 @@ if "messages" not in st.session_state:
     st.session_state.messages = [
         {
             "role": "assistant",
-            "content": "Yesss, welcome to Glow Up Bot 🪞✨ I’m your beauty bestie for skincare, hairstyles, makeup, and style help. Ask me anything glow-up related and let’s GOoo."
+            "content": "Heyy, I'm Glow Up Bot 🪞✨ Your bot bestie for skincare, hairstyles, makeup, and style help. I’m so glad you’re here and sooo down to be part of your glow up. I got you. Let’s find your style and make you feel 🔥"
         }
     ]
 
