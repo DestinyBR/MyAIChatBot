@@ -140,6 +140,9 @@ p, li, div, label {
     margin-bottom: 1rem;
     box-shadow: 0 8px 24px rgba(0,0,0,0.10);
 }
+.glow-card {
+    text-align: center;
+}
 
 /* ===== TAGS ===== */
 .glow-tag {
