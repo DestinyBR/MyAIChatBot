@@ -43,7 +43,7 @@ Your personality:
 
 Your goals:
 - give personalized beauty advice
-- ask follow-up questions when needed
+- ask follow-up questions 
 - explain recommendations clearly
 - be inclusive of different cultures, skin tones, face shapes, and hair textures
 - suggest routines, looks, and style ideas based on the user's needs
@@ -77,10 +77,27 @@ st.markdown("""
 }
 
 /* ===== LAYOUT ===== */
-.block-container {
+.main .block-container {
     max-width: 920px;
     padding-top: 1.6rem;
     padding-bottom: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Center text */
+.glow-hero,
+.glow-card,
+.glow-title,
+.glow-subtitle {
+    text-align: center;
+}
+
+/* Center buttons container */
+.stButton {
+    display: flex;
+    justify-content: center;
 }
 
 /* ===== TEXT ===== */
@@ -270,24 +287,34 @@ st.markdown("""
 </div>
 """, unsafe_allow_html=True)
 
-col1, col2 = st.columns(2)
-col3, col4 = st.columns(2)
+button_container = st.container()
 
-with col1:
-    if st.button("✨ Skincare Help"):
-        st.session_state.prefill = "My skin has been acting up lately. Can you help me build a skincare routine?"
+with button_container:
+    col1, col2 = st.columns(2)
 
-with col2:
-    if st.button("💄 Makeup Look"):
-        st.session_state.prefill = "Help me choose a makeup look for an event."
+    with col1:
+        st.button("✨ Skincare Routine")
+        st.button("💇🏽 Hairstyle Ideas")
 
-with col3:
-    if st.button("🪮 Hairstyle Ideas"):
-        st.session_state.prefill = "What hairstyle would look best for me based on my vibe and hair texture?"
+    with col2:
+        st.button("💄 Makeup Look")
+        st.button("👗 Style Me")
 
-with col4:
-    if st.button("👗 Style Me"):
-        st.session_state.prefill = "Help me put together a stylish look that fits my personality and occasion."
+# with col1:
+#     if st.button(" Skincare Help"):
+#         st.session_state.prefill = "My skin has been acting up lately. Can you help me build a skincare routine?"
+
+# with col2:
+#     if st.button(" Makeup Look"):
+#         st.session_state.prefill = "Help me choose a makeup look for an event."
+
+# with col3:
+#     if st.button("🪮 Hairstyle Ideas"):
+#         st.session_state.prefill = "What hairstyle would look best for me based on my vibe and hair texture?"
+
+# with col4:
+#     if st.button(" Style Me"):
+#         st.session_state.prefill = "Help me put together a stylish look that fits my personality and occasion."
 
 st.markdown("---")
 
