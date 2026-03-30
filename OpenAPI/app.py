@@ -242,7 +242,7 @@ if "messages" not in st.session_state:
     st.session_state.messages = [
         {
             "role": "assistant",
-            "content": " I’m  glad you’re here and sooo down to be part of your glow up journey. Let’s find your style and make you feel 🔥"
+            "content": " Heyy, I’m  glad you’re here and sooo down to be part of your glow up journey. Let’s find your style and make you feel 🔥"
         }
     ]
 
@@ -253,7 +253,7 @@ st.markdown("""
 <div class="glow-hero">
     <div class="glow-title">Glow Up Bot 🪞</div>
     <div class="glow-subtitle">
-        Heyy, I'm Glow Up Bot 🪞✨ Your bestie for skincare, hairstyles, makeup, and style help! 
+        I'm Glow Up Bot 🪞✨ Your trusted advisor for skincare, hairstyles, makeup, and style support! 
         Whether you wanna build a skincare routine, find a makeup look for an event, get hairstyle ideas, or put together a stylish outfit, I got you.
 
 </div>
