@@ -427,7 +427,12 @@ def build_model_messages(user_text: str) -> List[Dict[str, Any]]:
     messages = [
         {
             "role": "system",
-            "content": SYSTEM_PROMPT + "\n\nSaved profile: " + profile_summary(st.session_state.profile),
+            "content": (
+                SYSTEM_PROMPT
+                + "\n\nSaved profile: "
+                + profile_summary(st.session_state.profile)
+                + f"\n\nCurrent topic: {st.session_state.current_thread}"
+            ),
         }
     ]
     messages.extend(st.session_state.messages[-12:])
