@@ -280,9 +280,7 @@ textarea, input {
     unsafe_allow_html=True,
     
 )
-st.markdown("""
-<a href="#top" class="home-btn">🏠</a>
-""", unsafe_allow_html=True)
+
 # -----------------------------
 # Utility helpers
 # -----------------------------
@@ -640,9 +638,7 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-# -----------------------------
-# Quick actions
-# -----------------------------
+
 # -----------------------------
 # Quick actions
 # -----------------------------
@@ -668,7 +664,9 @@ for i, action in enumerate(quick_actions(st.session_state.profile)):
             st.session_state.messages = st.session_state.threads[thread_name].copy()
             st.session_state.draft_prompt = action["prompt"]
             st.rerun()
-
+st.markdown("""
+<a href="#top" class="home-btn">🏠</a>
+""", unsafe_allow_html=True)
 # -----------------------------
 # Voice + face scan
 # -----------------------------
@@ -702,6 +700,7 @@ if st.session_state.show_voice:
         if st.button("Use voice"):
             transcript = transcribe_audio(voice_audio.getvalue())
             st.session_state.draft_prompt = transcript
+            st.session_state.show_voice = False 
             st.success(f"Added: {transcript}")
 
 # ---------- CAMERA ----------
@@ -723,6 +722,7 @@ if st.session_state.show_camera:
             )
 
             st.success("Face added to memory")
+            st.session_state.show_camera = False
             st.rerun()
 
 # with tool_col1:
@@ -875,7 +875,7 @@ if st.session_state.generated_image_bytes:
 # -----------------------------
 # Chat history
 # -----------------------------
-st.markdown("### 💬 Chat")
+st.markdown(f"### 💬 Chat — {st.session_state.current_thread}") 
 for msg in st.session_state.messages:
     avatar = "🪞" if msg["role"] == "assistant" else "✨"
     with st.chat_message(msg["role"], avatar=avatar):
@@ -885,26 +885,25 @@ for msg in st.session_state.messages:
 # Chat input
 # -----------------------------
 typed_input = st.chat_input("Ask me about beauty, fashion, colors, makeup, skincare, or your outfit...")
-final_prompt = typed_input or st.session_state.draft_prompt 
+final_prompt = typed_input or st.session_state.draft_prompt
 
 if final_prompt:
+    st.session_state.draft_prompt = ""
+
     st.session_state.messages.append({"role": "user", "content": final_prompt})
 
-    with st.chat_message("user"):
+    with st.chat_message("user", avatar="✨"):
         st.markdown(final_prompt)
 
-    with st.chat_message("assistant"):
+    with st.chat_message("assistant", avatar="🪞"):
         with st.spinner("Glow Up Bot is thinking..."):
             try:
-                # Get normal response
                 reply = ask_glowup_bot(final_prompt)
                 st.markdown(reply)
 
-                #  IMAGE TRIGGER
                 if any(word in final_prompt.lower() for word in [
                     "image", "inspo", "outfit", "look", "show me", "generate"
                 ]):
-
                     image_prompt = f"""
 Create a high-quality fashion or beauty inspiration image.
 
@@ -916,10 +915,10 @@ User preferences:
 
 Make it stylish, flattering, modern, and realistic.
 """
-
                     image_bytes = generate_outfit_image(image_prompt)
 
                     if image_bytes:
+                        st.session_state.generated_image_bytes = image_bytes
                         st.image(image_bytes, caption="✨ Your Glow Up Inspo", use_container_width=True)
                         reply += "\n\n✨ I generated an inspo image for you above!"
 
@@ -928,3 +927,12 @@ Make it stylish, flattering, modern, and realistic.
                 st.markdown(reply)
 
     st.session_state.messages.append({"role": "assistant", "content": reply})
+    st.session_state.threads[st.session_state.current_thread] = st.session_state.messages.copy()
+
+    recent_text = "\n".join(
+        f"{m['role']}: {m['content']}" for m in st.session_state.messages[-8:]
+    )
+    st.session_state.profile = extract_profile_updates(
+        recent_text,
+        st.session_state.profile
+    )
