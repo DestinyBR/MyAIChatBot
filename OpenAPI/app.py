@@ -778,25 +778,45 @@ for msg in st.session_state.messages:
 # Chat input
 # -----------------------------
 typed_input = st.chat_input("Ask me about beauty, fashion, colors, makeup, skincare, or your outfit...")
-final_prompt = typed_input or st.session_state.draft_prompt
 
-if final_prompt:
-    st.session_state.draft_prompt = ""
+if typed_input:
+    st.session_state.messages.append({"role": "user", "content": typed_input})
 
-    st.session_state.messages.append({"role": "user", "content": final_prompt})
+    with st.chat_message("user"):
+        st.markdown(typed_input)
 
-    with st.chat_message("user", avatar="✨"):
-        st.markdown(final_prompt)
-
-    with st.chat_message("assistant", avatar="🪞"):
+    with st.chat_message("assistant"):
         with st.spinner("Glow Up Bot is thinking..."):
             try:
-                reply = ask_glowup_bot(final_prompt)
+                # Get normal response
+                reply = ask_glowup_bot(typed_input)
+                st.markdown(reply)
+
+                #  IMAGE TRIGGER
+                if any(word in typed_input.lower() for word in [
+                    "image", "inspo", "outfit", "look", "show me", "generate"
+                ]):
+
+                    image_prompt = f"""
+Create a high-quality fashion or beauty inspiration image.
+
+User request:
+{typed_input}
+
+User preferences:
+{st.session_state.profile}
+
+Make it stylish, flattering, modern, and realistic.
+"""
+
+                    image_bytes = generate_outfit_image(image_prompt)
+
+                    if image_bytes:
+                        st.image(image_bytes, caption="✨ Your Glow Up Inspo", use_container_width=True)
+                        reply += "\n\n✨ I generated an inspo image for you above!"
+
             except Exception as e:
-                reply = f"Okayy, tiny hiccup on my end. Try that again. Error: {e}"
-        st.markdown(reply)
+                reply = f"Something went wrong: {e}"
+                st.markdown(reply)
 
     st.session_state.messages.append({"role": "assistant", "content": reply})
-
-    recent_text = "\n".join(f"{m['role']}: {m['content']}" for m in st.session_state.messages[-8:])
-    st.session_state.profile = extract_profile_updates(recent_text, st.session_state.profile)
