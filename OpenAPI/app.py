@@ -586,7 +586,7 @@ st.markdown(
     <div class="hero-card">
         <div class="hero-title">Glow Up Bot 🪞</div>
         <div class="hero-sub">
-            Beauty chat + outfit builder + saved preferences + voice input + face scan + outfit image generation.
+            I am your personal beauty assistant! Perfect for outfit ideas, makeup looks, skincare tips, and more. Save your preferences in the sidebar and ask me anything about beauty and style! I got you!
         </div>
     </div>
     """,
@@ -616,40 +616,91 @@ for i, action in enumerate(quick_actions(st.session_state.profile)):
 # -----------------------------
 # Voice + face scan
 # -----------------------------
-tool_col1, tool_col2 = st.columns(2, gap="large")
+# -----------------------------
+# Input tools (icons)
+# -----------------------------
+if "show_camera" not in st.session_state:
+    st.session_state.show_camera = False
 
-with tool_col1:
-    st.markdown("### 🎙️ Voice input")
-    voice_audio = st.audio_input("Record a beauty or outfit question")
+if "show_voice" not in st.session_state:
+    st.session_state.show_voice = False
+
+tool_row = st.columns([0.08, 0.08, 0.84])
+
+with tool_row[0]:
+    if st.button("🎤", help="Voice input"):
+        st.session_state.show_voice = not st.session_state.show_voice
+
+with tool_row[1]:
+    if st.button("📷", help="Face scan"):
+        st.session_state.show_camera = not st.session_state.show_camera
+
+with tool_row[2]:
+    st.caption("Tap icons to open voice or camera")
+
+# ---------- VOICE ----------
+if st.session_state.show_voice:
+    voice_audio = st.audio_input("Speak your question")
+
     if voice_audio is not None:
-        if st.button("Use voice message", key="use_voice_btn", use_container_width=True):
-            try:
-                transcript = transcribe_audio(voice_audio.getvalue())
-                if transcript:
-                    st.session_state.draft_prompt = transcript
-                    st.success(f"Added to chat: {transcript}")
-                else:
-                    st.warning("I couldn’t hear enough to transcribe that.")
-            except Exception as e:
-                st.error(f"Voice transcription failed: {e}")
+        if st.button("Use voice"):
+            transcript = transcribe_audio(voice_audio.getvalue())
+            st.session_state.draft_prompt = transcript
+            st.success(f"Added: {transcript}")
 
-with tool_col2:
-    st.markdown("### 📸 Face scan")
-    selfie = st.camera_input("Take a clear front-facing photo")
-    face_context = st.text_input(
-        "Optional face-scan goal",
-        placeholder="soft glam, prom, no-makeup makeup, bold lip...",
-    )
-    if selfie is not None and st.button("Analyze my face", key="analyze_face_btn", use_container_width=True):
-        try:
-            analysis = analyze_face_photo(selfie.getvalue(), selfie.type or "image/jpeg", face_context)
-            st.session_state.last_face_analysis = analysis
-            st.session_state.messages.append({"role": "assistant", "content": "Photo analysis:\n\n" + analysis})
-            st.session_state.profile = extract_profile_updates(analysis, st.session_state.profile)
-            st.success("Face analysis added to chat and memory.")
+# ---------- CAMERA ----------
+if st.session_state.show_camera:
+    selfie = st.camera_input("Take a photo")
+
+    if selfie is not None:
+        if st.button("Analyze face"):
+            analysis = analyze_face_photo(selfie.getvalue(), selfie.type or "image/jpeg")
+
+            st.session_state.messages.append({
+                "role": "assistant",
+                "content": "Photo analysis:\n\n" + analysis
+            })
+
+            st.session_state.profile = extract_profile_updates(
+                analysis,
+                st.session_state.profile
+            )
+
+            st.success("Face added to memory")
             st.rerun()
-        except Exception as e:
-            st.error(f"Face analysis failed: {e}")
+
+# with tool_col1:
+#     st.markdown("### 🎙️ Voice input")
+#     voice_audio = st.audio_input("Record a beauty or outfit question")
+#     if voice_audio is not None:
+#         if st.button("Use voice message", key="use_voice_btn", use_container_width=True):
+#             try:
+#                 transcript = transcribe_audio(voice_audio.getvalue())
+#                 if transcript:
+#                     st.session_state.draft_prompt = transcript
+#                     st.success(f"Added to chat: {transcript}")
+#                 else:
+#                     st.warning("I couldn’t hear enough to transcribe that.")
+#             except Exception as e:
+#                 st.error(f"Voice transcription failed: {e}")
+
+# with tool_col2:
+#     st.markdown("### 📸 Face scan")
+#     selfie = st.camera_input("Take a clear front-facing photo")
+#     face_context = st.text_input(
+#         "Optional face-scan goal",
+#         placeholder="soft glam, prom, no-makeup makeup, bold lip...",
+#     )
+#     if selfie is not None and st.button("Analyze my face", key="analyze_face_btn", use_container_width=True):
+#         try:
+#             analysis = analyze_face_photo(selfie.getvalue(), selfie.type or "image/jpeg", face_context)
+#             st.session_state.last_face_analysis = analysis
+#             st.session_state.messages.append({"role": "assistant", "content": "Photo analysis:\n\n" + analysis})
+#             st.session_state.profile = extract_profile_updates(analysis, st.session_state.profile)
+#             st.success("Face analysis added to chat and memory.")
+#             st.rerun()
+#         except Exception as e:
+#             st.error(f"Face analysis failed: {e}")
 
 # -----------------------------
 # Outfit builder
