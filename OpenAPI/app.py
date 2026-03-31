@@ -34,7 +34,6 @@ DATA_DIR.mkdir(exist_ok=True)
 PROFILE_PATH = DATA_DIR / "profile.json"
 OUTFITS_PATH = DATA_DIR / "saved_outfits.json"
 
-st.markdown("<div id='top'></div>", unsafe_allow_html=True) #Meant to be placed after header  to add a home button 
 
 SYSTEM_PROMPT = """
 You are Glow Up Bot, a warm, stylish, inclusive beauty and fashion assistant.
@@ -141,6 +140,11 @@ if "messages" not in st.session_state:
             ),
         }
     ]
+if "threads" not in st.session_state:
+    st.session_state.threads = {"default": st.session_state.messages.copy()}
+
+if "current_thread" not in st.session_state:
+    st.session_state.current_thread = "default"
 
 if "profile" not in st.session_state:
     saved_profile = load_json(PROFILE_PATH, DEFAULT_PROFILE.copy())
@@ -238,7 +242,7 @@ st.markdown(
         font-weight: 700;
     }
 
-    [[data-testid="stChatInput"] > div {
+    [data-testid="stChatInput"] > div {
     border-radius: 22px;
     background: rgba(42,31,61,0.94);
     border: 1px solid rgba(255,255,255,0.08) !important;
@@ -639,12 +643,31 @@ st.markdown(
 # -----------------------------
 # Quick actions
 # -----------------------------
+# -----------------------------
+# Quick actions
+# -----------------------------
+st.markdown("<div id='top'></div>", unsafe_allow_html=True)
+
 st.markdown("### Quick actions")
 action_cols = st.columns(4, gap="large")
+
 for i, action in enumerate(quick_actions(st.session_state.profile)):
     with action_cols[i % 4]:
         if st.button(action["label"], key=f"quick_{i}", use_container_width=True):
+            thread_name = action["label"]
+
+            if thread_name not in st.session_state.threads:
+                st.session_state.threads[thread_name] = [
+                    {
+                        "role": "assistant",
+                        "content": f"Welcome to your {thread_name} chat ✨ Ask me anything here.",
+                    }
+                ]
+
+            st.session_state.current_thread = thread_name
+            st.session_state.messages = st.session_state.threads[thread_name].copy()
             st.session_state.draft_prompt = action["prompt"]
+            st.rerun()
 
 # -----------------------------
 # Voice + face scan
