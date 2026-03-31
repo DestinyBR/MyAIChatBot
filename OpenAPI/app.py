@@ -829,22 +829,23 @@ for msg in st.session_state.messages:
 # Chat input
 # -----------------------------
 typed_input = st.chat_input("Ask me about beauty, fashion, colors, makeup, skincare, or your outfit...")
+final_prompt = typed_input or st.session_state.draft_prompt 
 
-if typed_input:
-    st.session_state.messages.append({"role": "user", "content": typed_input})
+if final_prompt:
+    st.session_state.messages.append({"role": "user", "content": final_prompt})
 
     with st.chat_message("user"):
-        st.markdown(typed_input)
+        st.markdown(final_prompt)
 
     with st.chat_message("assistant"):
         with st.spinner("Glow Up Bot is thinking..."):
             try:
                 # Get normal response
-                reply = ask_glowup_bot(typed_input)
+                reply = ask_glowup_bot(final_prompt)
                 st.markdown(reply)
 
                 #  IMAGE TRIGGER
-                if any(word in typed_input.lower() for word in [
+                if any(word in final_prompt.lower() for word in [
                     "image", "inspo", "outfit", "look", "show me", "generate"
                 ]):
 
@@ -852,7 +853,7 @@ if typed_input:
 Create a high-quality fashion or beauty inspiration image.
 
 User request:
-{typed_input}
+{final_prompt}
 
 User preferences:
 {st.session_state.profile}
