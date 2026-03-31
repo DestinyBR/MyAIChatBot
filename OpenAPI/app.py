@@ -34,6 +34,8 @@ DATA_DIR.mkdir(exist_ok=True)
 PROFILE_PATH = DATA_DIR / "profile.json"
 OUTFITS_PATH = DATA_DIR / "saved_outfits.json"
 
+st.markdown("<div id='top'></div>", unsafe_allow_html=True) #Meant to be placed after header  to add a home button 
+
 SYSTEM_PROMPT = """
 You are Glow Up Bot, a warm, stylish, inclusive beauty and fashion assistant.
 
@@ -241,11 +243,30 @@ st.markdown(
         background: rgba(42,31,61,0.94);
         border: 1px solid rgba(255,255,255,0.10);
     }
+    .home-btn {
+    position: fixed;
+    right: 25px;
+    bottom: 110px;
+    background: linear-gradient(135deg, #ad67ff, #eb66a7);
+    color: white;
+    border-radius: 50%;
+    width: 55px;
+    height: 55px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size: 1.5rem;
+    text-decoration:none;
+    z-index:999;
+}
     </style>
     """,
     unsafe_allow_html=True,
+    
 )
-
+st.markdown("""
+<a href="#top" class="home-btn">🏠</a>
+""", unsafe_allow_html=True)
 # -----------------------------
 # Utility helpers
 # -----------------------------
