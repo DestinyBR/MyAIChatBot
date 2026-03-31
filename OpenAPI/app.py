@@ -238,11 +238,23 @@ st.markdown(
         font-weight: 700;
     }
 
-    [data-testid="stChatInput"] > div {
-        border-radius: 22px;
-        background: rgba(42,31,61,0.94);
-        border: 1px solid rgba(255,255,255,0.10);
-    }
+    [[data-testid="stChatInput"] > div {
+    border-radius: 22px;
+    background: rgba(42,31,61,0.94);
+    border: 1px solid rgba(255,255,255,0.08) !important;
+    box-shadow: none !important;
+}
+
+[data-testid="stChatInput"] > div:focus-within {
+    border: 1px solid rgba(255,255,255,0.08) !important;
+    box-shadow: none !important;
+    outline: none !important;
+}
+
+textarea, input {
+    box-shadow: none !important;
+    outline: none !important;
+}
     .home-btn {
     position: fixed;
     right: 25px;
