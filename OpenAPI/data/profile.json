@@ -1,32 +1,19 @@
 {
-  "name": "Dest",
-  "favorite_colors": [
-    "pink",
-    "brow",
-    "black",
-    "and gold"
-  ],
-  "favorite_styles": [
-    "glam",
-    "street wear",
-    "comfy",
-    "soft glam"
-  ],
-  "best_colors": [
-    "gold",
-    "red",
-    "pink",
-    "black"
-  ],
+  "name": "",
+  "favorite_colors": [],
+  "favorite_styles": [],
+  "best_colors": [],
   "skin_tone": "",
   "undertone": "",
   "face_shape": "",
-  "hair_texture": "soft and thick",
-  "budget": "Mid-range",
+  "hair_texture": "",
+  "budget": "",
   "notes": [
-    "Wants a new protective hairstyle",
-    "Requested boho/goddess knotless braids inspiration images",
-    "Budget-conscious; wants recommendations that fit their budget.",
-    "Goal: soft glam look for prom"
+    "Likes getting haircuts",
+    "scared of scissors",
+    "Scared of scissors; prefers scissor-free or clipper-dominant options",
+    "Likes getting haircuts.",
+    "Scared of scissors.",
+    "Scared of scissors; prefers to avoid scissor-based hair cutting."
   ]
 }
